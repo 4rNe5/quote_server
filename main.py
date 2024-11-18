@@ -25,9 +25,9 @@ quotes_data = [
 ]
 
 app = FastAPI(
-    title="명언 API",
+    title="Quote API",
     description="위대한 사상가들의 인생 명언을 제공하는 API",
-    version="0.1.0"
+    version="0.1.1"
 )
 
 @app.get("/", response_model=QuoteResponse)
