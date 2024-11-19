@@ -3,16 +3,11 @@ from typing import List, Optional
 import random
 from pydantic import BaseModel
 import uvicorn
+
 from quote_list import quote_list
+from quote_model import Quote, QuoteResponse
 
-class Quote(BaseModel):
-    author: str
-    authorProfile: str
-    message: str
 
-class QuoteResponse(BaseModel):
-    quote: Quote
-    total_quotes: int
 
 # 명언 데이터 가공
 quotes_data = [
@@ -24,11 +19,14 @@ quotes_data = [
     for quote in quote_list
 ]
 
+
 app = FastAPI(
     title="Quote API",
     description="위대한 사상가들의 인생 명언을 제공하는 API",
     version="0.1.1"
 )
+
+
 
 @app.get("/", response_model=QuoteResponse)
 async def get_random_quote():
@@ -67,6 +65,9 @@ async def search_quotes(keyword: str):
 async def get_authors():
     # 모든 저자 목록 반환
     return sorted(list(set(q.author for q in quotes_data)))
+
+
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
